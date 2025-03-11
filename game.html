@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Games - Digital Entertainment Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #2a2a72;
+            --secondary: #009ffd;
+            --accent: #ff3f81;
+            --dark: #0a0a2e;
+            --light: #f8f9ff;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem;
+            background: rgba(10, 10, 46, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            padding: 100px 2rem 2rem;
+            min-height: 100vh;
+        }
+
+        .active-page {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Home Page */
+        #home {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Games Page */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        /* Cart Page */
+        .cart-items {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        .remove-btn {
+            color: var(--accent);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .remove-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Payment Page */
+        .payment-methods {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .payment-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+        }
+
+        /* Contact Page */
+        .contact-info {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 1rem 0;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                margin-top: 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="video-background">
+        <source src="videos/background.mp4" type="video/mp4">
+    </video>
+
+    <nav class="navbar">
+        <div class="logo">Premium Games</div>
+        <div class="nav-links">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#games" class="nav-link">Games</a>
+            <a href="#cart" class="nav-link">Cart</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <section id="home" class="page active-page">
+        <div class="hero-content">
+            <h1>Your Ultimate Gaming Destination</h1>
+            <p>Explore a universe of premium gaming experiences</p>
+            <button class="btn" onclick="showPage('games')">Browse Games</button>
+        </div>
+    </section>
+
+    <!-- Games Page -->
+    <section id="games" class="page">
+        <div class="games-grid" id="gamesContainer"></div>
+    </section>
+
+    <!-- Cart Page -->
+    <section id="cart" class="page">
+        <div class="cart-items">
+            <h2>Your Cart</h2>
+            <div id="cartItems"></div>
+            <div class="cart-total">
+                <h3>Total: <span id="cartTotal">0</span> LKR</h3>
+                <button class="btn" onclick="showPage('payment')">Proceed to Payment</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Page -->
+    <section id="payment" class="page">
+        <div class="payment-methods">
+            <h2>Payment Options</h2>
+            <div class="payment-card">
+                <h3><i class="fas fa-mobile-alt"></i> EZ Cash</h3>
+                <p>076 233 2738</p>
+            </div>
+            <div class="payment-card">
+                <h3><i class="fas fa-university"></i> Bank Transfer</h3>
+                <p>Bank of Ceylon - Nattandiya Branch</p>
+                <p>Account Name: Harith Jayasanka</p>
+                <p>Account Number: 931310045</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact" class="page">
+        <div class="contact-info">
+            <h2>Contact Us</h2>
+            <div class="contact-card">
+                <h3><i class="fas fa-phone"></i> Phone</h3>
+                <p>076 233 2738</p>
+            </div>
+            <div class="contact-card">
+                <h3><i class="fas fa-envelope"></i> Email</h3>
+                <p>harithjayasanka14@gmail.com</p>
+            </div>
+            <div class="contact-card">
+                <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                <p>Nattandiya, Sri Lanka</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Game Data
+        const games = [
+            { name: "Grand Theft Auto V", image: "gta5.jpg", price: 500 },
+            { name: "Red Dead Redemption 2", image: "rdr2.jpg", price: 500 },
+            { name: "A Way Out", image: "a-way-out.jpg", price: 500 },
+            { name: "Days Gone", image: "days-gone.jpg", price: 500 },
+            { name: "Detroit: Become Human", image: "detroit.jpg", price: 500 },
+            { name: "Ghost of Tsushima", image: "ghost.jpg", price: 500 },
+            { name: "Black Myth Wukong", image: "wukong.jpg", price: 500 },
+            { name: "Spider-Man 2", image: "spiderman2.jpg", price: 500 },
+            { name: "It Takes Two", image: "ittakestwo.jpg", price: 500 },
+            { name: "Battlefield V", image: "bfv.jpg", price: 500 },
+            { name: "Battlefield 1", image: "bf1.jpg", price: 500 },
+            { name: "Uncharted Legacy of Thieves", image: "uncharted.jpg", price: 500 },
+            { name: "Need for Speed Heat", image: "nfs-heat.jpg", price: 500 },
+            { name: "Mortal Kombat 11", image: "mk11.jpg", price: 500 }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        // Initialize Games
+        function initGames() {
+            const container = document.getElementById("gamesContainer");
+            games.forEach(game => {
+                const card = document.createElement("div");
+                card.className = "game-card";
+                card.innerHTML = `
+                    <img src="images/${game.image}" class="game-image" alt="${game.name}">
+                    <h3>${game.name}</h3>
+                    <p>${game.price} LKR</p>
+                    <button class="btn" onclick="addToCart('${game.name}', ${game.price})">Add to Cart</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Cart Functions
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+            alert(`${name} added to cart!`);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function updateCart() {
+            localStorage.setItem("cart", JSON.stringify(cart));
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById("cartItems");
+            const totalElement = document.getElementById("cartTotal");
+            let total = 0;
+            
+            container.innerHTML = "";
+            cart.forEach((item, index) => {
+                total += item.price;
+                const div = document.createElement("div");
+                div.className = "cart-item";
+                div.innerHTML = `
+                    <div>
+                        <h4>${item.name}</h4>
+                        <p>${item.price} LKR</p>
+                    </div>
+                    <i class="fas fa-trash remove-btn" onclick="removeFromCart(${index})"></i>
+                `;
+                container.appendChild(div);
+            });
+            
+            totalElement.textContent = total;
+        }
+
+        // Navigation
+        function showPage(pageId) {
+            document.querySelectorAll(".page").forEach(page => {
+                page.classList.remove("active-page");
+            });
+            document.getElementById(pageId).classList.add("active-page");
+        }
+
+        // Event Listeners
+        document.querySelectorAll(".nav-link").forEach(link => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                showPage(link.getAttribute("href").substring(1));
+            });
+        });
+
+        // Initialization
+        initGames();
+        renderCart();
+    </script>
+</body>
+</html>
